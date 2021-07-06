@@ -41,7 +41,7 @@ def print_header
   puts
 end
 
-def print students
+def print_list students
   # Print each student record on its own line, followed by an empty line
   students.each_with_index { |student, ind| puts "#{ind + 1}: #{student[:name]} (#{student[:cohort]} cohort)" }
   puts
@@ -55,5 +55,5 @@ end
 
 students = input_students
 print_header
-print students
+print_list students
 print_footer students
