@@ -1,8 +1,29 @@
+# Create an empty array to hold student records
+@students = []
+
 def interactive_menu
-  # 1. Print the menu and ask the user what to do
-  # 2. Get the input and save it to a variable
-  # 3. Carry out the user's instruction
-  # 4. Repeat from step 1
+  loop do
+    # 1. Print the menu and ask the user for input
+    puts
+    puts "1. Add students"
+    puts "2. Show students"
+    puts "3. Exit"
+
+    # 2. Get the input and save it to a variable
+    choice = gets.chomp.to_i
+    puts
+
+    # 3. Carry out the user's instruction
+    case choice
+    when 1
+      input_students
+    when 2
+      print_students
+    when 3
+      exit
+    else
+      interactive_menu
+    end
   end
 end
 
@@ -12,26 +33,26 @@ def input_students
   puts "Press [Enter] twice when you're done"
   puts
   
-  # Create an empty array to hold student records
-  students = []
-
   # Wait for the user to input the student's name and assign it to a variable
   name = gets.chomp
 
   # Do the following until no name is inputted (i.e. the user presses Enter twice)
   until name.empty? do
     # Add a hash containing the new student's name and cohort to the students array
-    students << {name: name.capitalize, cohort: :november}
+    @students << {name: name.capitalize, cohort: :november}
 
     # Print a confirmation and a tally of the total students
-    puts "Added #{name}. Total students: #{students.count}"
+    puts "Added #{name}. Total students: #{@students.count}"
 
     # Wait for more user input and reassign the name variable
     name = gets.chomp
   end
+end
 
-  # Return the students array
-  students
+def print_students
+  print_header
+  print_list
+  print_footer
 end
 
 def print_header
@@ -41,19 +62,16 @@ def print_header
   puts
 end
 
-def print_list students
+def print_list
   # Print each student record on its own line, followed by an empty line
-  students.each_with_index { |student, ind| puts "#{ind + 1}: #{student[:name]} (#{student[:cohort]} cohort)" }
+  @students.each_with_index { |student, ind| puts "#{ind + 1}: #{student[:name]} (#{student[:cohort]} cohort)" }
   puts
 end
 
-def print_footer students
-  num_students = students.count
+def print_footer
+  num_students = @students.count
   # Print the total student count
   puts "Overall we have #{num_students} great student#{num_students > 1 ? "s" : ""}!"
 end
 
-students = input_students
-print_header
-print_list students
-print_footer students
+interactive_menu
