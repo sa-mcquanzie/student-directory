@@ -1,3 +1,11 @@
+def interactive_menu
+  # 1. Print the menu and ask the user what to do
+  # 2. Get the input and save it to a variable
+  # 3. Carry out the user's instruction
+  # 4. Repeat from step 1
+  end
+end
+
 def input_students
   # Prompt user for input
   puts "Please enter students' names"
@@ -35,13 +43,14 @@ end
 
 def print students
   # Print each student record on its own line, followed by an empty line
-  students.each { |student| puts "#{student[:name]} (#{student[:cohort]} cohort)" }
+  students.each_with_index { |student, ind| puts "#{ind + 1}: #{student[:name]} (#{student[:cohort]} cohort)" }
   puts
 end
 
 def print_footer students
+  num_students = students.count
   # Print the total student count
-  puts "Overall we have #{ students.count } great students!"
+  puts "Overall we have #{num_students} great student#{num_students > 1 ? "s" : ""}!"
 end
 
 students = input_students
