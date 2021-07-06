@@ -3,35 +3,39 @@
 
 def interactive_menu
   loop do
-    # 1. Print the menu and ask the user for input
-    puts
+    print_menu
+    selection = gets.chomp.to_i # Get user selection
+    process selection
+  end
+end
+
+def print_menu
+    # Print the menu and ask the user for input
     puts "1. Add students"
     puts "2. Show students"
     puts "3. Exit"
-
-    # 2. Get the input and save it to a variable
-    choice = gets.chomp.to_i
     puts
+end
 
-    # 3. Carry out the user's instruction
-    case choice
-    when 1
-      input_students
-    when 2
-      print_students
-    when 3
-      exit
-    else
-      interactive_menu
-    end
+def process selection
+  puts
+  # Carry out the user's instruction
+  case selection
+  when 1
+    input_students
+  when 2
+    print_students
+  when 3
+    exit
+  else
+    interactive_menu
   end
 end
 
 def input_students
   # Prompt user for input
   puts "Please enter students' names"
-  puts "Press [Enter] twice when you're done"
-  puts
+  puts "Press [Enter] twice when you're done\n\n"
   
   # Wait for the user to input the student's name and assign it to a variable
   name = gets.chomp
@@ -42,7 +46,7 @@ def input_students
     @students << {name: name.capitalize, cohort: :november}
 
     # Print a confirmation and a tally of the total students
-    puts "Added #{name}. Total students: #{@students.count}"
+    puts "\nAdded #{name}. Total students: #{@students.count}\n\n"
 
     # Wait for more user input and reassign the name variable
     name = gets.chomp
@@ -58,8 +62,7 @@ end
 def print_header
   # Print the list title followed by an empty line
   puts "The Students of Villains Academy"
-  puts "------------------------------"
-  puts
+  puts "------------------------------\n\n"
 end
 
 def print_list
@@ -71,7 +74,7 @@ end
 def print_footer
   num_students = @students.count
   # Print the total student count
-  puts "Overall we have #{num_students} great student#{num_students > 1 ? "s" : ""}!"
+  puts "Overall we have #{num_students} great student#{num_students > 1 ? "s" : ""}!\n\n"
 end
 
 interactive_menu
