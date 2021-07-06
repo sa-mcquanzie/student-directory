@@ -4,7 +4,7 @@
 def interactive_menu
   loop do
     print_menu
-    selection = gets.chomp.to_i # Get user selection
+    selection = STDIN.gets.chomp.to_i # Get user selection
     process selection
   end
 end
@@ -44,7 +44,7 @@ def input_students
   puts "Press [Enter] twice when you're done\n\n"
   
   # Wait for the user to input the student's name and assign it to a variable
-  name = gets.chomp
+  name = STDIN.gets.chomp
 
   # Do the following until no name is inputted (i.e. the user presses Enter twice)
   until name.empty? do
@@ -55,7 +55,7 @@ def input_students
     puts "\nAdded #{name}. Total students: #{@students.count}\n\n"
 
     # Wait for more user input and reassign the name variable
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 end
 
@@ -98,8 +98,8 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
     @students << {name: name, cohort: cohort.to_sym}
@@ -107,4 +107,19 @@ def load_students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first
+
+  return if filename.nil?
+
+  if File.exists? filename
+    load_students filename
+    puts "Loaded #{@students.count} records from #{filename}"
+  else
+    puts "No such file #{filename}"
+    puts "Starting with empty student list"
+  end
+end
+
+try_load_students
 interactive_menu
